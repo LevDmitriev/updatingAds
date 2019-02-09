@@ -1,0 +1,15 @@
+{
+  "name": "updatingads",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Lev",
+  "license": "MIT",
+  "dependencies": {
+    "casperjs": "^1.1.4",
+    "md5": "^2.2.1",
+    "phantomjs-prebuilt": "^2.1.16",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {}
+}

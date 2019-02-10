@@ -49,20 +49,26 @@ Nedr.prototype.authorize = function (oAccountLoginData) {
 Nedr.prototype.updateLastAd = function () {
     var self = this;
     self.toAdsPage(function () {
-        if (casper.exists('a.btn:not(.btn_upped)[href*="up"]')) { // Если есть объявления для поднятия
-            casper.thenEvaluate(function () {
-                /** Все изображения обновления объявлений */
-                var allRefreshBtn = document.querySelectorAll('a.btn:not(.btn_upped)[href*="up"]');
-                allRefreshBtn[allRefreshBtn.length - 1].click();
-            });
-            casper.thenEvaluate(function () {
-                document.querySelector('button[onclick*="up"]').click();
-            })
-        } else {
-            casper.then(function () {
-                casper.echo(self.sSiteName + ' нет объявлений для поднятия', 'INFO');
-            });
-        }
+        casper.thenEvaluate(function () {//Перейдём на споследнюю страницу объявлений
+            var allPageBtns = document.querySelectorAll('.pages .page a');
+            allPageBtns[allPageBtns.length/2 - 1].click();
+        });
+        casper.then(function (value) {
+            if (casper.exists('a.btn:not(.btn_upped)[href*="up"]')) { // Если есть объявления для поднятия
+                casper.thenEvaluate(function () {
+                    /** Все изображения обновления объявлений */
+                    var allRefreshBtn = document.querySelectorAll('a.btn:not(.btn_upped)[href*="up"]');
+                    allRefreshBtn[allRefreshBtn.length - 1].click();
+                });
+                casper.thenEvaluate(function () {
+                    document.querySelector('button[onclick*="up"]').click();
+                })
+            } else {
+                casper.then(function () {
+                    casper.echo(self.sSiteName + ' нет объявлений для поднятия', 'INFO');
+                });
+            }
+        })
     });
 };
 

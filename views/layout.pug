@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/libs/bootstrap.min.css')
+    body
+        #app.container-fluid
+            block content
+    script(src='/javascripts/libs/jquery.min.js')
+    script(src='/javascripts/libs/popper.min.js')
+    script(src='/javascripts/libs/bootstrap.bundle.min.js')
+    script(src='/javascripts/globals/ModelUserData.js')
+    script(src="/javascripts/libs/vue.js")
+    block vue-components
+    script(src="/javascripts/main.js")
+    block footer
+
+

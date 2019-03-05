@@ -1,15 +1,24 @@
 {
-  "name": "updatingads",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "author": "Lev",
-  "license": "MIT",
-  "dependencies": {
-    "casperjs": "^1.1.4",
-    "md5": "^2.2.1",
-    "phantomjs-prebuilt": "^2.1.16",
-    "underscore": "^1.9.1"
+  "name": "updatingAds",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "cookie-parser": "^1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "help": "^3.0.2",
+    "http-errors": "~1.6.2",
+    "jquery": "^3.3.1",
+    "md5": "^2.2.1",
+    "morgan": "~1.9.0",
+    "node-sass-middleware": "0.11.0",
+    "popper.js": "^1.14.7",
+    "pug": "^2.0.3",
+    "puppeteer": "^1.12.2",
+    "vue": "^2.6.8"
+  }
 }

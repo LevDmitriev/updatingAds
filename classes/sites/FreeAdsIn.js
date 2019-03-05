@@ -31,7 +31,6 @@ FreeAdsIn.prototype.authorize = async function (oAccountLoginData) {
     await page.type('input[name="Login"]', oAccountLoginData.login);
     await page.type('input[name="Password"]', oAccountLoginData.password);
     await page.click('form[name="manageLangFields"] input[type="submit"]');
-    await page.waitForNavigation();
     await page.goto(this.adsPageURL);
     if (!page.url().includes(this.adsPageURL)) { // Если после всего мы не находимся на стрнице объявлений
         throw new Error('При авторизации произошла ошибка');

@@ -1,68 +1,53 @@
 /**
  *  Объект-посредник ModelUserData для обращения к таблице с аккаунтами пользователей с фронта.
+ *  Реализует шаблон Заместитель (Proxy) для доступа к объекту ModelUserData
+ *
+ *  @see classes/model/ModelUserData.js
  */
 window.ModelUserData = new function () {
-    this.ajaxPath = '/ModelUserData';
     /**
-     * Отправить ajax запрос с данными
-     * @param {Object} oData Объект с данными
+     * Путь, по которому нужно направлять ajax запросы
+     * @type {string}
+     * @private
      */
-    this.sendAjax = function (oData) {
+    let __ajaxPath = '/ModelUserData';
+    /**
+     * Приватное свойство для отправки ajax запросов, чтобы получить результат
+     * @param {Object} oData
+     * @private
+     */
+    let __sendAjax = function (oData) {
         let result = null;
         $.ajax({
-            url:     this.ajaxPath,// URL, куда отправлять запрос
+            url:     __ajaxPath,// URL, куда отправлять запрос
             data:    oData,
-            type:     'POST',
-            async: false,
+            type:    'POST',
+            async:   false,
             success: response => result = JSON.parse(response),
             error:   error => console.log(error)
         });
 
         return result;
     };
-
-    this.addAccount = function (newAccount) {
-        let oData = [
-            {name: 'method', value: 'addAccount'},
-            {name: 'arguments', value: JSON.stringify([newAccount])},
-        ];
-        return this.sendAjax(oData);
-    };
-
-    this.updateAccount = function(id, oNewValues) {
-        let oData = [
-            {name: 'method', value: 'updateAccount'},
-            {name: 'arguments', value: JSON.stringify([id, oNewValues])},
-        ];
-        return this.sendAjax(oData);
-    };
-
-    this.deleteAccount = function (id) {
-        let oData = [
-            {name: 'method', value: 'deleteAccount'},
-            {name: 'arguments', value: JSON.stringify([id])},
-        ];
-        return this.sendAjax(oData);
-    };
-
-    this.getAccountById = function (id) {
-        let oData = [
-            {name: 'method', value: 'getAccountById'},
-            {name: 'arguments', value: JSON.stringify([id])},
-        ];
-        return this.sendAjax(oData);
-    };
-
-    /**
-     * Получить массив аккаунтов
-     * @return {Array}
-     */
-    this.getAccounts = function() {
-        let oData = [
-            {name: 'method', value: 'getAccounts'},
-        ];
-        return this.sendAjax(oData);
-
-    }
+    // Отпраляем запрос на получение массива со всеми именами функций объекта замещения
+    $.ajax({
+        url:      __ajaxPath,
+        data:     [{name: 'getFunctionNames', value: 'Y'}],
+        type:     'POST',
+        dataType: 'json',
+        async:   false,
+        success:  arFunctionsNames => {
+            // Устанавливаем все функции,  по именам объекта замещения
+            arFunctionsNames.forEach(sFunctionName => {
+                this[sFunctionName] = function () {
+                    let oData = [
+                        {name: 'method', value: sFunctionName},
+                        {name: 'arguments', value: JSON.stringify(Array.from(arguments))}
+                    ];
+                    return __sendAjax(oData);
+                }
+            })
+        }
+    });
 
 };

@@ -25,7 +25,6 @@ Vue.component('site-update-block', {
     methods:  {
         /** Запустить тест обновления сайта с  запуском браузера и т.п. */
         testUpdate: function () {
-
             this.accounts.forEach(account => {
                 let oData = [
                     {name: 'debug', value: true},
@@ -53,8 +52,10 @@ Vue.component('site-update-block', {
             }
             newAccount.siteName = this.siteName;
             newAccount = window.ModelUserData.addAccount(newAccount);
-            if (newAccount) {
+            if (newAccount && Number.isInteger(newAccount.id)) {
                 this.accounts.push(newAccount);
+            } else {
+                throw new Error('При добавлении аккаунта произошла ошибка')
             }
         },
         /**
@@ -63,12 +64,29 @@ Vue.component('site-update-block', {
          */
         deleteAccount: function(id) {
             id = parseInt(id);
-            if (window.ModelUserData.deleteAccount(id)) {
-                let account = this.accounts.filter(account => account.id === id)[0];
-                this.accounts.splice(this.accounts.indexOf(account), 1);
+            if (!Number.isInteger(id)) {
+                throw new Error('Невозможно удалить аккаунт с ID ' + id );
             }
+            let account = this.accounts.filter(account => account.id === id)[0];
+            if (account) {
+                let sConfirmMessage = 'Вы действительно хотите удалить аккаунт ' + account.login + ' сайта ' +  this.siteName + ' ?';
+                if (confirm(sConfirmMessage) && window.ModelUserData.deleteAccount(id)) {
+                    this.accounts.splice(this.accounts.indexOf(account), 1);
+                }
+            }
+
         },
+        /**
+         * Обновить аккаунт
+         * @param {Number | String} id ID аккаунта
+         * @param {Object} oNewValues Объект с обновляемыми свойтсвами
+         */
         updateAccount: function (id, oNewValues) {
+            id = parseInt(id);
+            if (!Number.isInteger(id)) {
+                throw new Error('Невозможно удалить аккаунт с ID ' + id );
+            }
+
             if (window.ModelUserData.updateAccount(id, oNewValues)) {
                 let account = this.accounts.filter(account => account.id === id)[0];
                 this.accounts[this.accounts.indexOf(account)] = oNewValues;

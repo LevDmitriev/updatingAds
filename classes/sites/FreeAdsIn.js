@@ -56,7 +56,10 @@ FreeAdsIn.prototype.updateAds = async function (oAccountLoginData) {
     /** Коллекция со всеми кнопками поднятия типа JSHandle*/
     let arAllBtns  = await page.$$('a[href*="updateAction"]');
     if (arAllBtns.length) {
-        await arAllBtns[arAllBtns.length-1].click();
+        await Promise.all([
+            arAllBtns[arAllBtns.length-1].click(),
+            page.waitForNavigation()
+        ]);
     }
 };
 

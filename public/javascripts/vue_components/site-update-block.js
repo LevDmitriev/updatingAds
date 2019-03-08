@@ -47,7 +47,16 @@ Vue.component('site-update-block', {
             let newAccount = {};
             for (let fieldName in this.propAccountFields) {
                 if (this.propAccountFields.hasOwnProperty(fieldName)) {
-                    newAccount[fieldName] = '';
+                    switch (this.propAccountFields[fieldName].type) {
+                        case 'list':
+                            newAccount[fieldName] = [];
+                            break;
+                        case 'number':
+                            newAccount[fieldName] = 0;
+                            break;
+                        default:
+                            newAccount[fieldName] = '';
+                    }
                 }
             }
             newAccount.siteName = this.siteName;
@@ -94,7 +103,7 @@ Vue.component('site-update-block', {
         }
     },
     template: `
-<div  class="col-6 mb-4">
+<div  class="col-12 mb-4">
     <div class="card border-info">
             <div  class="card-header">
                 {{siteName}}
@@ -107,6 +116,8 @@ Vue.component('site-update-block', {
                                 v-if="field.type === 'list'"
                                 :name="fieldName"
                                 :title="field.name"
+                                :multiple="field.multiple"
+                                :size="field.multiple ? field.size ? field.size : 5 : 1"
                                 v-model="account[fieldName]"
                                 @change="updateAccount(account.id, account)"
                                >
@@ -131,7 +142,7 @@ Vue.component('site-update-block', {
                             </div>
                         </div>
                         <button type="button" class="btn btn-outline-info" @click="addAccount">Добавить аккаунт</button>
-                        <button type="button" class="btn btn-outline-secondary" @click="testUpdate">Протестировать обновление объявлений</button>
+                        <button type="button" class="btn btn-outline-secondary" @click="testUpdate">Протестировать</button>
                     </div>
             </div>
         </div>

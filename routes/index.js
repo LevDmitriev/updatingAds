@@ -17,12 +17,12 @@ router.get('/', function(req, res) {
         'Avizinfo',
         'Nedr',
         '_100Realt',
-        // 'Rent',
         'FreeAdsIn',
         'Move',
         'KakDomaCom',
         'Sutki24Su',
         'Egent',
+        'Spiti',
     ];
     let arSitesTemplateData = [];
     arSites.forEach(function (sSite) {

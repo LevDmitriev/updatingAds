@@ -5,6 +5,8 @@ let puppeteer = require('puppeteer');
 let util   = require('util');
 /** @type {ModelUserData} */
 let ModelUserData = require('../classes/model/ModelUserData');
+/** @type {ModelAccountFields} */
+let ModelAccountFields = require('../classes/model/ModelAccountFields');
 /** @type {Router} */
 let router = express.Router();
 router.get('/', function(req, res) {
@@ -50,9 +52,21 @@ router.get('/', function(req, res) {
       const oSite = new Site(siteSettings);
       /** @type {ModelUserData} Объект синглтон для работы с таблицей пользователей */
       const UserData = new ModelUserData;
+        /** @type {ModelAccountFields} */
+      const AccountFields = new ModelAccountFields;
       /** @type {Object} объект аккаунта пользователя */
       const account= UserData.getAccountById(req.query.accountId);
-      result = await oSite.updateAds(account);
+      // Перебираем все действия в аккаунте и выполняем по очереди
+      for (let i = 0; i < account.actions.length; i++) {
+          /**
+           * ID действия, которое нужно выполнить в аккаунте
+           * @type {Number}
+           */
+          let actionId = account.actions[i];
+          /** @type {string} Метод сайта, который нужно вызвать */
+          let method = AccountFields.getValueById(Site.constructor.name, 'actions', actionId).code;
+          result = await oSite[method](account);
+      }
     } finally {
       await browser.close();
       res.send(util.inspect(result));

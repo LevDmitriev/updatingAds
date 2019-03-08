@@ -30,8 +30,13 @@ Yourenta.prototype.authorize = async function (oAccountLoginData) {
     await page.goto(this.authFormPageURL);
     await page.type('input[name="enter_email"]', oAccountLoginData.login);
     await page.type('input[name="enter_pass"]', oAccountLoginData.password);
-    await page.click('#enter');
-    await page.waitForNavigation({waitUntil: 'load'});
+    await Promise.all([
+        page.click('#enter'),
+        page.waitForNavigation(),
+    ]);
+    if (!page.url().includes(this.adsPageURL)) { // Если после всего мы не находимся на стрнице объявлений
+        throw new Error('При авторизации произошла ошибка');
+    }
 };
 
 /**

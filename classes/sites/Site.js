@@ -130,8 +130,6 @@ Site.prototype.closePopup = async function (selectorCloseBtn) {
  *
  * @abstract
  */
-Site.prototype.updateAds = async function (oAccountData) {
-    return false;
-};
+Site.prototype.updateAds = async function (oAccountData) {};
 
 module.exports = Site;

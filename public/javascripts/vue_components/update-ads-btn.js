@@ -18,7 +18,7 @@ Vue.component('update-ads-btn', {
             /**
              * Только те аккаунты, у которых есть интервал, логин и пароль
              */
-            let accounts = this.accounts.filter(oAccount => parseInt(oAccount.updateInterval) && oAccount.login && oAccount.password);
+            let accounts = this.accounts.filter(oAccount => parseInt(oAccount.updateInterval) && oAccount.login && oAccount.password && oAccount.updateType);
 
             function updateAccount(oAccount) {
                 let oData = [
@@ -36,12 +36,23 @@ Vue.component('update-ads-btn', {
             }
 
             accounts.forEach(oAccount => {
+                if (oAccount.updateType === 'interval') {
                     let interval = setInterval(() => {
                         updateAccount(oAccount);
-                    }, parseInt(oAccount.updateInterval) * 1000);
+                    }, oAccount.updateInterval * 1000);
                     this.intervals.push(interval);
                     // Сразу запускаем обновление аккаунта, чтобы не ждать, когда сработает первый таймер
-                updateAccount(oAccount);
+                    updateAccount(oAccount);
+                } else if (oAccount.updateType === 'exactTime') {
+                    let interval = setInterval(() => {
+                        let curDate = new Date();
+                        if ((curDate.getHours() * 3600 + curDate.getMinutes() * 60 + curDate.getSeconds()) * 1000 === oAccount.updateInterval) {
+                            updateAccount(oAccount);
+                        }
+                    }, 1000);
+                    this.intervals.push(interval);
+                }
+
             });
             this.isUpdating = true;
         },

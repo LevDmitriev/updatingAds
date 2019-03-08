@@ -11,7 +11,7 @@ let Site = require('./Site');
  */
 let Spiti = function Spiti (settings) {
     Site.call(this, settings);
-    this.mainPageURL = 'https://www.spiti.ru/';
+    this.mainPageURL = 'https://www.spiti.ru';
     this.logoutPageURL = this.mainPageURL + '/logout?back=1';
     this.adsPageURL =  this.mainPageURL + '/ad-list';
     this.authFormPageURL = this.mainPageURL + '/login';

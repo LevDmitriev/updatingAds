@@ -33,6 +33,20 @@ let ModelAccountFields = new function ModelAccountFields () {
             type: 'number',
             siteBind: ['BarahlaNet'], // Привязка к сайтам
         },
+        updateType: {
+            name: 'Тип обновления',
+            type: 'list',
+            siteBind: ['*'], // Привязка к сайтам
+            multiple: false,
+            size: 1,
+            value: {
+                default: [
+                    {id: 0, name: "Конкретное время каждого дня", code: "exactTime"},
+                    {id: 1, name: "Интервал", code: "interval"},
+                ]
+            },
+
+        },
         updateInterval: {
             name: 'Период обновления (сек)',
             type: 'number',

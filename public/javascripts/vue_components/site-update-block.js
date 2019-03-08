@@ -32,7 +32,7 @@ Vue.component('site-update-block', {
                     {name: 'accountId', value:account.id},
                 ];
                 $.ajax({
-                    url:     '/ajax?debug="Y"',// URL, куда отправлять запрос
+                    url:     '/ajax',// URL, куда отправлять запрос
                     data:    oData,
                     timeout: 1000 * 60* 60, // Время ожидания ответа от сервера
                     //type:     'POST',

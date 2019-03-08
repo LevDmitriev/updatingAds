@@ -1,6 +1,5 @@
 let util = require('util');
 let Site = require('./Site');
-
 /**
  * Функция-конструктор для работы с freeadsin.ru
  *
@@ -50,11 +49,16 @@ FreeAdsIn.prototype.updateAds = async function (oAccountLoginData) {
     /** Все кнопки переключения страниц */
     let arAllPageBtns  = await page.$$('a.subtitle');
     if (arAllPageBtns.length) {
-        await arAllPageBtns[arAllPageBtns.length-1].click();
-        await page.waitForNavigation();
+        await Promise.all([
+            arAllPageBtns[arAllPageBtns.length-1].click(),
+            page.waitForNavigation()
+        ]);
+
     }
+
     /** Коллекция со всеми кнопками поднятия типа JSHandle*/
     let arAllBtns  = await page.$$('a[href*="updateAction"]');
+
     if (arAllBtns.length) {
         await Promise.all([
             arAllBtns[arAllBtns.length-1].click(),

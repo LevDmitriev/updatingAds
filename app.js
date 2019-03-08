@@ -37,7 +37,9 @@ app.use('/ModelUserData', ModelUserDataRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
+process.on('unhandledRejection', (reason, p) => {
+    console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+});
 // error handler
 app.use(function(err, req, res) {
   // set locals, only providing error in development

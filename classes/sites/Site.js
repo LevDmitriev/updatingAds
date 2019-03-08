@@ -93,7 +93,7 @@ Site.prototype.getPage = async function () {
                 firstPage.on('framenavigated', function (frame) {
                     (async function () {
                         for (let scriptPath of self.debug.page.goto.scripts) {
-                            await firstPage.addScriptTag({path: scriptPath});
+                            await frame.addScriptTag({path: scriptPath}).catch(e => console.log(e));
                         }
                     })();
                 });

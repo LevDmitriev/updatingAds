@@ -8,7 +8,7 @@ let sassMiddleware = require('node-sass-middleware');
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let ajaxRouter = require('./routes/ajax');
-let ModelUserDataRouter = require('./routes/ModelUserData');
+let ProxyRouter = require('./routes/Proxy');
 
 let app = express();
 
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/ajax', ajaxRouter);
-app.use('/ModelUserData', ModelUserDataRouter);
+app.use('/Proxy', ProxyRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

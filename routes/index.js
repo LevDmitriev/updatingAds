@@ -1,6 +1,6 @@
 let express = require('express');
-let ModelUserData = require('../classes/model/ModelUserData');
-let ModelAccountFields = require('../classes/model/ModelAccountFields');
+let ModelUserData = require('../classes/Model/ModelUserData');
+let ModelAccountFields = require('../classes/Model/ModelAccountFields');
 let router = express.Router();
 
 router.get('/', function(req, res) {

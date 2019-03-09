@@ -10,7 +10,7 @@ let Site = require('./Site');
  */
 let Yourenta = function Yourenta (settings) {
     Site.call(this, settings);
-    this.mainPageURL = 'https://www.yourenta.ru';
+    this.mainPageURL = 'https://yourenta.ru';
     this.logoutPageURL = this.mainPageURL + '/away.html';
     this.adsPageURL =  this.mainPageURL + '/user-index.html';
     this.authFormPageURL = this.mainPageURL + '/login.html';

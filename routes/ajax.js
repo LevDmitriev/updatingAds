@@ -4,18 +4,18 @@ let express = require('express');
 let puppeteer = require('puppeteer');
 let util   = require('util');
 /** @type {ModelUserData} */
-let ModelUserData = require('../classes/model/ModelUserData');
+let ModelUserData = require('../classes/Model/ModelUserData');
 /** @type {ModelAccountFields} */
-let ModelAccountFields = require('../classes/model/ModelAccountFields');
+let ModelAccountFields = require('../classes/Model/ModelAccountFields');
 /** @type {Router} */
 let router = express.Router();
 router.get('/', function(req, res) {
   /**
    * Наследник класса Site
    * @type {Site}
-   * @see /classes/sites/Site.js
+   * @see /classes/Sites/Site.js
    */
-  const Site = require(`../classes/sites/${req.query.site}`);
+  const Site = require(`../classes/Sites/${req.query.site}`);
   /**
    * Объект для инициализации puppeteer
    */

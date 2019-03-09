@@ -1,5 +1,10 @@
 let fs                                  = require('fs');
 /**
+ *
+ * @type {ModelAccountFields}
+ */
+let ModelAccountFields = new (require('./ModelAccountFields'));
+/**
  * Модель для работы с данными пользователей сайтов. Синглтон.
  * @constructor
  */
@@ -12,6 +17,28 @@ let ModelUserData                       = new function ModelUserData () {
     this.__oAccounts = [];
     if (fs.existsSync(this.pathToAccounts)) { // Если есть файл с аккаунтами
         this.__oAccounts = JSON.parse(fs.readFileSync(this.pathToAccounts, 'utf8'));
+        // присваиваем значения по умолчанию всем полям аккаунтов, если не заданы
+        this.__oAccounts.map(function (oAccount) {
+            /**
+             * Объект со всеми полями аккаунта для сайта
+             */
+            let oSiteFields = ModelAccountFields.getList(oAccount.siteName);
+            for (let sFieldName in oSiteFields) {
+                if (oSiteFields.hasOwnProperty(sFieldName) && !oAccount[sFieldName]) {
+                    switch(oSiteFields[sFieldName].jsType) {
+                        case Array:
+                            oAccount[sFieldName] = [];
+                            break;
+                        case Number:
+                            oAccount[sFieldName] = 0;
+                            break;
+                        default:
+                            oAccount[sFieldName] = '';
+                            break
+                    }
+                }
+            }
+        });
     }
 
     /**

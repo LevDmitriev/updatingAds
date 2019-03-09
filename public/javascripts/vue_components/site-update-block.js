@@ -47,11 +47,11 @@ Vue.component('site-update-block', {
             let newAccount = {};
             for (let fieldName in this.propAccountFields) {
                 if (this.propAccountFields.hasOwnProperty(fieldName)) {
-                    switch (this.propAccountFields[fieldName].type) {
-                        case 'list':
+                    switch (this.propAccountFields[fieldName].jsType) {
+                        case Array:
                             newAccount[fieldName] = [];
                             break;
-                        case 'number':
+                        case Number:
                             newAccount[fieldName] = 0;
                             break;
                         default:

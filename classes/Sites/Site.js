@@ -49,9 +49,9 @@ function Site (settings) {
                 delay: 2000// Задержка при клике
             }
         }
-    } : false,
-        /** Объект браузера Puppeteer */
-        this.__browser = settings.browser;
+    } : false;
+    /** Объект браузера Puppeteer */
+    this.__browser = settings.browser;
     /** Страница браузера puppeteer, в которой выполняется вся работа */
     this.__page = settings.page || null;
 };

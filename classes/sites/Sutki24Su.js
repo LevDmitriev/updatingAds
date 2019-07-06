@@ -1,6 +1,6 @@
 let util = require('util');
 let Site = require('./Site');
-let ModelAccountFields = require('../model/ModelAccountFields');
+let ModelAccountFields = require('../Model/ModelAccountFields');
 
 /**
  * Функция-конструктор для работы с Nedr

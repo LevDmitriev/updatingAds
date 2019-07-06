@@ -49,9 +49,9 @@ function Site (settings) {
                 delay: 2000// Задержка при клике
             }
         }
-    } : false,
-        /** Объект браузера Puppeteer */
-        this.__browser = settings.browser;
+    } : false;
+    /** Объект браузера Puppeteer */
+    this.__browser = settings.browser;
     /** Страница браузера puppeteer, в которой выполняется вся работа */
     this.__page = settings.page || null;
 };
@@ -93,8 +93,10 @@ Site.prototype.getPage = async function () {
                 firstPage.on('framenavigated', function (frame) {
                     (async function () {
                         for (let scriptPath of self.debug.page.goto.scripts) {
+                                if (frame && frame.hasOwnProperty('addScriptTag')) {
                             await frame.addScriptTag({path: scriptPath}).catch(e => console.log(e));
                         }
+                            }
                     })();
                 });
             }

@@ -91,13 +91,13 @@ Site.prototype.getPage = async function () {
             if (self.debug.page && self.debug.page.goto && self.debug.page.goto.scripts && self.debug.page.goto.scripts.length) {
                 // Когда страница маняется, то подгружать все скрипты для дебага
                 firstPage.on('framenavigated', function (frame) {
-                        (async function () {
-                            for (let scriptPath of self.debug.page.goto.scripts) {
-                                if (frame) {
-                                    await frame.addScriptTag({path: scriptPath}).catch(e => console.log(e));
-                                }
+                    (async function () {
+                        for (let scriptPath of self.debug.page.goto.scripts) {
+                                if (frame && frame.hasOwnProperty('addScriptTag')) {
+                            await frame.addScriptTag({path: scriptPath}).catch(e => console.log(e));
+                        }
                             }
-                        })();
+                    })();
                 });
             }
         }

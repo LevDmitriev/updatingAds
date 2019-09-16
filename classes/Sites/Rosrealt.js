@@ -55,7 +55,7 @@ Rosrealt.prototype.updateAds = async function (oAccountLoginData) {
     let page = await this.getPage();
     await this.authorize(oAccountLoginData);
     /** Коллекция со всеми кнопками поднятия типа JSHandle*/
-    let arAllBtns  = await page.$$('input[name="actualize"].mybuttonblue');
+    let arAllBtns  = await page.$$('.p_options input[name="actualize"]');
     if (arAllBtns.length) {
         await arAllBtns[arAllBtns.length-1].click();
     }

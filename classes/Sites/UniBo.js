@@ -51,9 +51,16 @@ UniBo.prototype.authorize = async function (oAccountLoginData) {
 UniBo.prototype.updateAds = async function (oAccountLoginData) {
     let page = await this.getPage();
     await this.authorize(oAccountLoginData);
-    /** Коллекция со всеми кнопками поднятия типа JSHandle*/
-    let arAllBtns = await page.$$('.up a');
-    await arAllBtns[arAllBtns.length - 1].click();
+    /** Чекбокс для выделения всех объявлений*/
+    let checkboxSelectAll = await page.$('.il-check input');
+    await checkboxSelectAll.click();
+    /** Кнопка обновления даты */
+    let btnChangeData = await page.$('.action[data-action-name-en="ChangeDateEdit"]');
+    await btnChangeData.click();
+    await page.waitForSelector('.gap-block button');
+    /** Кнопка обновления всех объявлений */
+    let btnSubmit = await page.$('.gap-block button');
+    await btnSubmit.click();
 };
 
 module.exports = UniBo;

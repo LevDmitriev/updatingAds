@@ -23,13 +23,15 @@ router.get('/', function(req, res) {
         'Sutki24Su',
         'Egent',
         'Spiti',
+        'UniBo',
     ];
     let arSitesTemplateData = [];
-    arSites.forEach(function (sSite) {
+    arSites.forEach(function (siteName) {
+
         arSitesTemplateData.push({
-            name: sSite,
-            arAccounts: oModelUserData.getAccountsBySiteName(sSite),
-            arAccountFields: oModelAccountFields.getList(sSite)
+            name: siteName,
+            arAccounts: oModelUserData.getAccountsBySiteName(siteName),
+            arAccountFields: oModelAccountFields.getList(siteName)
         });
     });
     res.render('index', {

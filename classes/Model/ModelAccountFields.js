@@ -12,31 +12,26 @@ let ModelAccountFields = new function ModelAccountFields () {
             name: 'ID в базе данных',
             type: 'hidden',
             siteBind: ['*'], // Привязка к сайтам
-            jsType: Number,
         },
         siteName: {
             name: 'Имя сайта, к которому привязан аккаунт',
             type: 'hidden',
             siteBind: ['*'], // Привязка к сайтам
-            jsType: String,
         },
         login: {
             name: 'Логин',
             type: 'text',
             siteBind: ['*'], // Привязка к сайтам
-            jsType: String,
         },
         password: {
             name: 'Пароль',
             type: 'text',
             siteBind: ['*'], // Привязка к сайтам
-            jsType: String,
         },
         userId: {
             name: 'ID пользователя',
             type: 'number',
             siteBind: ['BarahlaNet'], // Привязка к сайтам
-            jsType: Number
         },
         updateType: {
             name: 'Тип обновления',
@@ -50,20 +45,16 @@ let ModelAccountFields = new function ModelAccountFields () {
                     {id: 2, name: "Интервал", code: "interval"},
                 ]
             },
-            jsType: Array
-
         },
         updateInterval: {
             name: 'Период обновления (сек)',
             type: 'number',
             siteBind: ['*'], // Привязка к сайтам
-            jsType: Number,
         },
         city: {
             name: 'Город',
             type: 'list',
             siteBind: ['Sutki24Su'], // Привязка к сайтам
-            jsType: Array,
             value: {
                 Sutki24Su: [
                     {id: 0, name: "Абакан", code: "abakan"},
@@ -333,14 +324,12 @@ let ModelAccountFields = new function ModelAccountFields () {
             siteBind: ['*'], // Привязка к сайтам
             multiple: true,
             size: 1,
-            jsType: Array,
             value: {
                 default: [
                     {id: 1, name: "Обновить объявления", code: "updateAds"},
                     {id: 2, name: "Авторизоваться", code: "authorize"},
                 ]
             },
-
         },
     };
 
@@ -385,7 +374,7 @@ let ModelAccountFields = new function ModelAccountFields () {
     this.isFieldBindToSite = function(siteName, fieldName) {
         let field = this.fields[fieldName];
 
-        return field.siteBind[0] === '*' || field.siteBind.indexOf(siteName) >= 0
+        return field.siteBind.indexOf('*') >= 0 || field.siteBind.indexOf(siteName) >= 0
     };
 
     /** Получть объект, описывающий поля авторизации на сайте по имени сайта

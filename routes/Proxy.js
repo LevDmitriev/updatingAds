@@ -5,6 +5,7 @@ let router = express.Router();
 router.post('/', function(req, res) {
     let post = req.body;
     let Class = require('../classes/' + post.class);
+    /** Объект, который проксируем */
     let ObjectForProxy = new Class;
     if (post['getFunctionNames']) { // Если нужно получить массив со всеми именами функций
         let result = [];

@@ -3,7 +3,6 @@ Vue.component('update-ads-btn', {
         return {
             intervals: [],
             isUpdating: false,
-            curDate: new Date(),
         }
     },
     computed: {
@@ -16,7 +15,6 @@ Vue.component('update-ads-btn', {
          * Начать обновление всех аккаунтов
          */
         startUpdating() {
-            let self = this;
             /**
              * Отфильтрованные аккаунты
              */
@@ -57,7 +55,8 @@ Vue.component('update-ads-btn', {
                     setTimeout(() => updateAccount(oAccount), 1000);
                 } else if (sUpdateType === 'exactTime') {
                     let interval = setInterval(() => {
-                        if ((self.curDate.getHours() * 3600 + self.curDate.getMinutes() * 60 + self.curDate.getSeconds()) === parseInt(oAccount.updateInterval)) {
+                        let  curDate = new Date();
+                        if ((curDate.getHours() * 3600 + curDate.getMinutes() * 60 + curDate.getSeconds()) === parseInt(oAccount.updateInterval)) {
                             updateAccount(oAccount);
                         }
                     }, 1000);

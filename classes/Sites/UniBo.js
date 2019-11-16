@@ -12,7 +12,7 @@ let UniBo = function Egent (settings) {
     Site.call(this, settings);
     this.mainPageURL     = 'https://www.unibo.ru';
     this.logoutPageURL   = this.mainPageURL + '/runModule/Logout.ajax';
-    this.adsPageURL      = 'https://admin.unibo.ru/messages/cabinet';
+    this.adsPageURL      = 'https://admin.unibo.ru/messages/messages';
     this.authFormPageURL = this.mainPageURL + '/runModule/Forms/Auth/Add.ajax';
 };
 
@@ -51,13 +51,13 @@ UniBo.prototype.authorize = async function (oAccountLoginData) {
 UniBo.prototype.updateAds = async function (oAccountLoginData) {
     let page = await this.getPage();
     await this.authorize(oAccountLoginData);
-    /** Чекбокс для выделения всех объявлений*/
-    let checkboxSelectAll = await page.$('.il-check input');
-    await checkboxSelectAll.click();
     /** Кнопка обновления даты */
     let btnChangeData = await page.$('.action[data-action-name-en="ChangeDateEdit"]');
     await btnChangeData.click();
-    await page.waitForSelector('.gap-block button');
+    await page.waitForSelector('#groupOperation_all_top');
+    /** Радио кнопка показывающая, что нужно обновить дату у всех */
+    let radioForAll = await page.$('#groupOperation_all_top');
+    await radioForAll.click();
     /** Кнопка обновления всех объявлений */
     let btnSubmit = await page.$('.gap-block button');
     await btnSubmit.click();

@@ -50,11 +50,12 @@ Privatarenda.prototype.updateAds = async function (oAccountLoginData) {
         // Т.к. контекст меняется, то повторно получаем все кнопки поднятия
         let arAllBtns    = await page.$$('input[name="actualize"]');
         await arAllBtns[i].click();
-        await page.waitForNavigation({waitUntil: 'domcontentloaded'});
-
-        await (await page.$('input[name="actualize"]')).click();
-        await page.waitForNavigation({waitUntil: 'domcontentloaded'});
-
+        // При клике открывается новое окно. Переключаемся на него
+        let newTarget = await this.getBrowser().waitForTarget(target => target.opener() === page.target());
+        let newPage = await newTarget.page();
+        await (await newPage.$('input[name="actualize"]')).click();
+        await newPage.waitForNavigation({waitUntil: 'domcontentloaded'});
+        newPage.close();
     }
 };
 

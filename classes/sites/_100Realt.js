@@ -10,7 +10,7 @@ let Site = require('./Site');
  */
 let _100Realt = function _100Realt (settings) {
     Site.call(this, settings);
-    this.mainPageURL = 'https://www.100realt.ru';
+    this.mainPageURL = 'https://100realt.ru';
     this.logoutPageURL = this.mainPageURL + '/logout';
     this.adsPageURL =  this.mainPageURL + '/housing';
     this.authFormPageURL = this.mainPageURL + '/sign?return=%2F';

@@ -12,9 +12,9 @@ let Site = require('./Site');
 let Rosrealt = function Rosrealt (settings) {
     Site.call(this, settings);
     this.mainPageURL = 'https://rosrealt.ru';
-    this.logoutPageURL = this.mainPageURL + '/rosrealt/myrosrealt.php?act=exit';
-    this.adsPageURL =  this.mainPageURL + '/rosrealt/myrosrealt.php?act=obyavleniya&type=1';
-    this.authFormPageURL = this.mainPageURL + '/rosrealt/myrosrealt.php?act=check';
+    this.logoutPageURL = this.mainPageURL + '/logout';
+    this.adsPageURL =  this.mainPageURL + '/kabinet';
+    this.authFormPageURL = this.mainPageURL + '/authorization';
 };
 
 util.inherits(Rosrealt, Site); // наследование
@@ -39,7 +39,12 @@ Rosrealt.prototype.authorize = async function (oAccountLoginData) {
             body: formData,
         });
     }, oAccountLoginData, this.authFormPageURL);
-    await page.goto(this.adsPageURL, {waitUntil: 'domcontentloaded'});
+    await page.goto(this.mainPageURL, {waitUntil: 'domcontentloaded'});
+    /** Коллекция со всеми кнопками Поднять типа JSHandle*/
+    let toProfileLinks  = await page.$$('a.user-menu__link_sign-in');
+    if (toProfileLinks.length) {
+        await toProfileLinks[toProfileLinks.length-1].click();
+    }
     if (!page.url().includes(this.adsPageURL)) { // Если после всего мы не находимся на стрнице объявлений
         throw new Error('При авторизации произошла ошибка');
     }
